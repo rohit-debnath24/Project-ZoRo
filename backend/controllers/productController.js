@@ -42,7 +42,7 @@ import productModel from '../models/productModel.js'
         console.log(images)
         // console.log(imagesUrl)
 
-        res.json({})
+        res.json({success:true,message:"Product Added" })
     } catch (error) {
         console.log(error)
         res.json({success:false,message:error.message})
