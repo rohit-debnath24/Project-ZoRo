@@ -23,7 +23,7 @@ const Hero = () => {
 
       {/* Right side - image */}
       <img
-        src={assets.hero_img}
+        src={assets.logo}
         className='w-full sm:w-1/2 object-cover'
         alt='Hero'
       />
