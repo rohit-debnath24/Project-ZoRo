@@ -51,7 +51,7 @@ const NavBar = () => {
                 <img onClick={() => setVisible(true)} src={assets.menu_icon} className='w-5 sm:hidden cursor-pointer' alt='' />
             </div>
             {/* sidebar menu for small screen */}
-            <div className={`absolute top-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'} `}>
+            <div className={`absolute top-0 bottom-0 overflow-hidden bg-amber-100 transition-all ${visible ? 'w-full' : 'w-0'} `}>
                 <div className='flex flex-col text-gray-600'>
                     <div  className='flex items-center gap-4 p-3 '>
                         <img onClick={()=> setVisible(false)} src={assets.dropdown_icon} className='h-4 rotate-180 ease-in-out duration-300 cursor-pointer' alt="" />
