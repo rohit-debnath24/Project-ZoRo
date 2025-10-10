@@ -1,8 +1,12 @@
 import multer from 'multer'
 
+
 const storage = multer.diskStorage({
-    filename:function(req,file,callback){
-        callback(null,file.originalname)
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/') // ensure this folder exists
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
     }
 })
 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
+import axios from 'axios'
+import {backend_Url} from '../App'
+import { toast } from 'react-toastify'
 
-const Add = () => {
+const Add = ({token}) => {
   const [image1,setImage1]=useState(false)
   const [image2,setImage2]=useState(false)
   const [image3,setImage3]=useState(false)
@@ -14,8 +17,46 @@ const Add = () => {
   const[subCategory,setSubCategory]=useState("Topwear")
   const[bestseller,setBestseller]=useState(false)
   const[sizes,setSizes]=useState([])
+
+  const onSubmitHandler=async(e)=>{
+    e.preventDefault()
+    try {
+      const formData = new FormData()
+      formData.append("name",name)
+      formData.append("description",description)
+      formData.append("price",price)
+      formData.append("category",category)
+      formData.append("subCategory",subCategory)
+      formData.append("bestseller",bestseller)
+      formData.append("sizes",JSON.stringify(sizes))
+      
+      image1 && formData.append("image1",image1)
+      image2 && formData.append("image2",image2)
+      image3 && formData.append("image3",image3)
+      image4 && formData.append("image4",image4)
+
+        const response = await axios.post(backend_Url + "/api/product/add",formData,{headers:{token}})
+        if(response.data.success){
+          toast.success(response.data.message)
+          setName('')
+          setDescription('')
+          setImage1(false)
+          setImage2(false)
+          setImage3(false)
+          setImage4(false)
+          setPrice('')
+        }else{
+          toast.error(response.data.message)
+          
+        }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
   return (
-    <form>
+    <form onSubmit={onSubmitHandler} className='flex flex-col items-start w-full gap-3'>
       <div>
         <p className='text-3xl py-4'>Upload Image</p>
         <div className='flex gap-8'>
@@ -73,27 +114,27 @@ const Add = () => {
       </div>
         <p className='mb-2'>Product Sizes</p>
       <div className='flex gap-3'>
-        <div className='bg-slate-200 px-3 py-1 cursor-pointer'>
+        <div onClick={()=>setSizes(prev=>prev.includes("S")?prev.filter(item=>item !== "S"):[...prev,"S"])} className={`${sizes.includes("S")?"bg-pink-300":"bg-slate-200"} px-3 py-1 cursor-pointer `}>
           <p>S</p>
         </div>
-        <div className='bg-slate-200 px-3 py-1 cursor-pointer'>
+        <div onClick={()=>setSizes(prev=>prev.includes("M")?prev.filter(item=>item !== "M"):[...prev,"M"])} className={`${sizes.includes("M")?"bg-pink-300":"bg-slate-200"} px-3 py-1 cursor-pointer `}>
           <p>M</p>
         </div>
-        <div className='bg-slate-200 px-3 py-1 cursor-pointer'>
+        <div onClick={()=>setSizes(prev=>prev.includes("L")?prev.filter(item=>item !== "L"):[...prev,"L"])} className={`${sizes.includes("L")?"bg-pink-300":"bg-slate-200"} px-3 py-1 cursor-pointer `}>
           <p>L</p>
         </div>
-        <div className='bg-slate-200 px-3 py-1 cursor-pointer'>
+        <div onClick={()=>setSizes(prev=>prev.includes("XL")?prev.filter(item=>item !== "XL"):[...prev,"XL"])} className={`${sizes.includes("XL")?"bg-pink-300":"bg-slate-200"} px-3 py-1 cursor-pointer `}>
           <p>XL</p>
         </div>
-        <div className='bg-slate-200 px-3 py-1 cursor-pointer'>
+        <div onClick={()=>setSizes(prev=>prev.includes("XXL")?prev.filter(item=>item !== "XXL"):[...prev,"XXL"])} className={`${sizes.includes("XXL")?"bg-pink-300":"bg-slate-200"} px-3 py-1 cursor-pointer `}>
           <p>XXL</p>
         </div>
       </div>
       <div className='flex gap-2 mt-2'>
-        <input onChange={(e)=>{setBestseller(e.target.value)}} value={bestseller} type='checkbox' id='bestseller'/>
+        <input onChange={(e)=>{setBestseller(e.target.value)}} checked={bestseller} type='checkbox' id='bestseller'/>
         <label htmlFor='bestseller' className='cursor-pointer'>Add to bestseller</label>
       </div>
-      <button type='submit' className='w-28 py-3 mt-4 bg-black text-white'>ADD</button>
+      <button type='submit' className='w-28 py-3 mt-4 bg-black text-white cursor-pointer'>ADD</button>
     </form>
   )
 }
