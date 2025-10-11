@@ -10,9 +10,11 @@ import Orders from './pages/Orders.jsx'
 import Login from './components/Login.jsx'
 
 export const backend_Url = import.meta.env.VITE_BACKEND_URL;
+export const currency = '₹';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):'');
+
   useEffect(()=>{
     localStorage.setItem('token',token)
   },[token])

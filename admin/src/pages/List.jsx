@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { backend_Url } from '../App'
+import { backend_Url, currency } from '../App'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const List = () => {
+const List = ({token}) => {
   const [list,setList]=useState([])
 
   const fetchList = async()=>{
@@ -22,6 +22,28 @@ const List = () => {
       }
   }
 
+
+const removeProduct= async (_id) => {
+  console.log("Attempting to delete product with ID:", _id);
+  try {
+    const response = await axios.post(backend_Url + "/api/product/remove" , {_id},{headers:{token}})
+  
+    if(response.data.success){
+      toast.success(response.data.message)
+      await fetchList()
+    }else{
+      toast.error(response.data.message)
+      console.log(response.data.message)
+      
+    }
+    
+  } catch (error) {
+    console.log(error)
+    toast.error(error.message)
+    
+  }
+}
+
   useEffect(()=>{
     fetchList()
   },[])
@@ -30,9 +52,26 @@ const List = () => {
     <>
       <p className='mb-2'>All Products List</p>
       <div>
-          <div>
-            <b></b>
+          <div className='hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm'>
+            <b>Image</b>
+            <b>Name</b>
+            <b>Category</b>
+            <b className=''>Price</b>
+            <b className='text-center'>Action</b>
           </div>
+          {/* Product List */}
+          {
+            list.map((item,index)=>(
+              <div key={item._id} className='grid grid-cols-[1fr-3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] py-2 border-gray-300 border '>
+                <img className='w-12' src={item.image[0]} alt='' />
+                <p>{item.name}</p>
+                <p>{item.category}</p>
+                <p>{currency}{item.price}</p>
+                <p onClick={()=>removeProduct(item._id)} className='text-center cursor-pointer'>X</p>
+    
+              </div>
+            ))
+          }
       </div>
     </>
   )

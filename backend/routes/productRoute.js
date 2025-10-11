@@ -9,6 +9,7 @@ productRouter.post('/add',adminAuth,upload.fields([{name:'image1',maxCount:1},{n
 
 
 productRouter.post('/list',listProduct)
+productRouter.post('/remove',removeProduct)
 productRouter.post('/single',singleProduct)
 
 export default productRouter;
