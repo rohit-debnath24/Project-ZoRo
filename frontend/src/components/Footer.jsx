@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className='flex gap-4'>
                     <img src={assets.logo} className='w-60 h-30 my-3' alt='' />
                     <p className='w-full py-4 md:w-2/3 text-gray-600'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem laborum voluptate eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, consectetur! Eligendi tempora quia vero recusandae quibusdam reiciendis maiores tenetur impedit aliquam ullam architecto sint consequuntur ipsam in, qui ratione enim?</p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem laborum voluptate eaque! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, consectetur! Eligendi tempora</p>
                 </div>
                 <div  >
                     <p className='text-xl font-medium mb-5'>COMPANY</p>
@@ -21,7 +21,7 @@ const Footer = () => {
                     </ul>
 
                 </div>
-                <div  >
+                <div >
                     <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
                     <ul className='flex flex-col gap-1 text-gray-600'>
                         <li>Phone number-7029089847</li>
