@@ -45,6 +45,7 @@ const Add = ({token}) => {
           setImage3(false)
           setImage4(false)
           setPrice('')
+          
         }else{
           toast.error(response.data.message)
           
@@ -94,7 +95,7 @@ const Add = ({token}) => {
           <p className="mb-2" >Product Category</p>
           <select onChange={(e)=>{setCategory(e.target.value)}} value={category} className='w-full px-3 py-2'>
             <option value="Men">Men</option>
-            <option value=" Women">Women</option>
+            <option value="Women">Women</option>
             <option value="Kids">Kids</option>
           </select>
         </div>
@@ -131,7 +132,7 @@ const Add = ({token}) => {
         </div>
       </div>
       <div className='flex gap-2 mt-2'>
-        <input onChange={(e)=>{setBestseller(e.target.value)}} checked={bestseller} type='checkbox' id='bestseller'/>
+        <input onChange={()=>setBestseller(prev=>!prev)} checked={bestseller} type='checkbox' id='bestseller'/>
         <label htmlFor='bestseller' className='cursor-pointer'>Add to bestseller</label>
       </div>
       <button type='submit' className='w-28 py-3 mt-4 bg-black text-white cursor-pointer'>ADD</button>

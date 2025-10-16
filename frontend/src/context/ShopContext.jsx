@@ -1,17 +1,22 @@
-import { createContext, use, useEffect, useState } from "react";
-import { products } from "../assets/assets";
+import { createContext, useEffect, useState } from "react";
+// import { products } from "../assets/assets";
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
+import axios from 'axios'
 export const ShopContext= createContext();
 
 
 const ShopContextProvider = (props) => {
     const currency='₹';  
     const delivery_fee=10;
+    const backend_url=import.meta.env.VITE_BACKEND_URL;
+    console.log('1. VITE_BACKEND_URL from .env:', backend_url);
     const [search,setSearch]=useState('');
     const [showSearch,setShowSearch]=useState(true)
     const [cartItems,setCartItems]=useState({})
+    const[products,setProducts]=useState([])
     const navigate =useNavigate();
+    const[token,setToken]=useState('')
 
 
     const addToCart = async(itemId,size)=>{
@@ -49,12 +54,46 @@ const ShopContextProvider = (props) => {
                     }
                     
                 } catch (error) {
-                    
                 }
             }
         }
         return totalCount;
     }
+    
+    const getProductData=async()=>{
+        try {
+                const response =await axios.post(backend_url+'/api/product/list')
+                // setProducts(response.data.data);
+                if(response.data.success){
+                    setProducts(response.data.products)
+                     console.log(response.data.products,'coming after seting the prod ')
+                }else{
+                    // console.log('false')
+                    toast.error(response.data.message)
+                    
+                }
+                // console.log(response.data.products)
+                // console.log('below \n',response.data,'hii')
+            } catch (error) {
+                console.log(error)
+                toast.error(error.message)
+                
+            }
+    }
+    
+    useEffect(()=>{
+        getProductData()
+    },[])
+
+     useEffect(()=>{
+      if(!token&& localStorage.getItem('token')){
+        setToken(localStorage.getItem('token'))
+        
+      }
+    },[])
+
+
+
 
     const updateQuantity = async(itemId,size,quantity) => {
         let  cartData = structuredClone(cartItems)
@@ -85,8 +124,9 @@ const ShopContextProvider = (props) => {
     const value = {
         products , currency , delivery_fee , 
         search,setSearch,showSearch, setShowSearch,
-        cartItems,addToCart,getCartCount,updateQuantity,
-        getCartAmount,navigate
+        cartItems,setCartItems,addToCart,getCartCount,updateQuantity,
+        getCartAmount,navigate,backend_url,
+        setToken,token
     
     }
 
