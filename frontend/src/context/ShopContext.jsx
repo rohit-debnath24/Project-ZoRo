@@ -153,7 +153,8 @@ const getUserCart = async(token)=>{
     const value = {
         products , currency , delivery_fee , 
         search,setSearch,showSearch, setShowSearch,
-        cartItems,setCartItems,addToCart,getCartCount,updateQuantity,
+        cartItems,setCartItems,addToCart,
+        getCartCount,updateQuantity,
         getCartAmount,navigate,backend_url,
         setToken,token
     

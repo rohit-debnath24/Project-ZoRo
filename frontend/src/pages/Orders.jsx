@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 
 const Orders = () => {
-  const { products, currency } = useContext(ShopContext)
+  const { backend_url,token, currency } = useContext(ShopContext)
   return (
     <div>
       <div className='text-2xl '>
