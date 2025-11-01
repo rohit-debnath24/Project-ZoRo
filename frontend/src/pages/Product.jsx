@@ -10,6 +10,7 @@ const Product = () => {
   const [productsData, setProductsData] = useState(false)
   const [image, setImage] = useState('')
   const [size, setSize] = useState('')
+  const {navigate}=useContext(ShopContext)
   const fetchProductsData = async () => {
 
     products.map((item) => {
@@ -69,7 +70,7 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 ' onClick={()=>addToCart(productsData._id,size)} >ADD TO CART</button>
+          <button className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 ' onClick={()=>{addToCart(productsData._id,size); navigate('/cart') }} >ADD TO CART</button>
         <hr className='mt-8 sm:w-4/5 '/>
         <div className='text-sm text-gray-500 mt-5 flex flex-col gap-1'>
                 <p>100% Original Product</p>

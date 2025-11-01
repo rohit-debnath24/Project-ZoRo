@@ -5,6 +5,7 @@ import { assets } from '../assets/assets'
 import {  useNavigate } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import axios from 'axios';
+import {toast} from 'react-toastify'
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState('cod');
@@ -59,11 +60,13 @@ const PlaceOrder = () => {
           const response =await axios.post(backend_url+'/api/order/place',orderData,{headers:{token}})
           
         console.log(response.data,"this is response data")
-        
+        // if(!token){
+        //   toast.error("Please Log In")
+        // }
           if (response.data.success) {
             setCartItems({})
             navigate('/orders')
-            toast.success(response)
+            toast.success(response.data.message)
           }else{
             toast.error(response.data.message)
           }
@@ -75,7 +78,7 @@ const PlaceOrder = () => {
       }
 
     } catch (error) {
-
+ toast.error(error.message)
     }
   }
   return (
